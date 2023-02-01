@@ -1,75 +1,80 @@
 "use strict";
 {
-    const selectorArticle = '.post';
-    const selectorTitle = '.post-title';
-    const selectorTitleList = '.titles';
-    const selectorArticleTags = '.post-tags .list';
-    const selectorArticleAuthor = '.post-author';
-    const selectorAuthorsList = '.list.authors';
-    const selectorTagsList = '.sidebar .tags';
-    const titleClickHandler = function (event) {
+    var selectorArticle_1 = '.post';
+    var selectorTitle_1 = '.post-title';
+    var selectorTitleList_1 = '.titles';
+    var selectorArticleTags_1 = '.post-tags .list';
+    var selectorArticleAuthor_1 = '.post-author';
+    var selectorAuthorsList_1 = '.list.authors';
+    var selectorTagsList_1 = '.sidebar .tags';
+    var titleClickHandler_1 = function (event) {
         event.preventDefault();
-        const clickedElement = this;
+        var clickedElement = this;
         /* find active link and make it inactive */
-        const activeLink = document.querySelector('.titles a.active');
+        var activeLink = document.querySelector('.titles a.active');
         if (activeLink)
             activeLink.classList.remove('active');
         /* add active class to clicked link */
         clickedElement.classList.add('active');
         /* find and hide active article */
-        const activeArticle = document.querySelector('.posts article.active');
+        var activeArticle = document.querySelector('.posts article.active');
         if (activeArticle)
             activeArticle.classList.remove('active');
         /* find id of article related to clicked link, then find it and show */
-        const hrefAttribute = clickedElement.getAttribute('href');
-        const targetArticle = document.querySelector(hrefAttribute);
+        var hrefAttribute = clickedElement.getAttribute('href');
+        var targetArticle = document.querySelector(hrefAttribute);
         if (targetArticle)
             targetArticle.classList.add('active');
     };
-    const generateTitleLinks = (customSelector = '') => {
+    var generateTitleLinks = function (customSelector) {
+        if (customSelector === void 0) { customSelector = ''; }
         /* find and empty title list */
-        const titleList = document.querySelector(selectorTitleList);
+        var titleList = document.querySelector(selectorTitleList_1);
         titleList.innerHTML = '';
         /* prepare variable for storing all the title links */
-        let html = '';
+        var html = '';
         /* find all articles and loop through each of them */
-        const articles = document.querySelectorAll(selectorArticle + customSelector);
-        for (let article of articles) {
+        var articles = document.querySelectorAll(selectorArticle_1 + customSelector);
+        for (var _i = 0, articles_1 = articles; _i < articles_1.length; _i++) {
+            var article = articles_1[_i];
             /* find id of the article */
-            const articleID = article.getAttribute('id');
+            var articleID = article.getAttribute('id');
             /* find elem that holds the title and retrieve it */
-            const articleTitle = article.querySelector(selectorTitle).innerHTML;
+            var articleTitle = article.querySelector(selectorTitle_1).innerHTML;
             /* create HTML of the link */
-            const linkHTML = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
+            var linkHTML = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
             /* insert link into html variable */
             html = html + linkHTML;
         }
         /* add all the links from html variable to titleList */
         titleList.insertAdjacentHTML('afterbegin', html);
         /* find created links and add listeners to them */
-        const links = document.querySelectorAll('.titles a');
-        for (let link of links) {
-            link.addEventListener('click', titleClickHandler);
+        var links = document.querySelectorAll('.titles a');
+        for (var _a = 0, links_1 = links; _a < links_1.length; _a++) {
+            var link = links_1[_a];
+            link.addEventListener('click', titleClickHandler_1);
         }
     };
-    const generateTags = () => {
+    var generateTags = function () {
         /* create a new array for holding unique tag names */
-        const allTags = [];
+        var allTags = [];
         /* find all articles and loop through */
-        const articles = document.querySelectorAll(selectorArticle);
-        for (let article of articles) {
+        var articles = document.querySelectorAll(selectorArticle_1);
+        for (var _i = 0, articles_2 = articles; _i < articles_2.length; _i++) {
+            var article = articles_2[_i];
             /* find div for storing tags  */
-            const tagWrapper = article.querySelector(selectorArticleTags);
+            var tagWrapper = article.querySelector(selectorArticleTags_1);
             /* prepare variable for storing all the tag links */
-            let html = '';
+            var html = '';
             /* get info about tags from data-tags attribute */
-            const dataTag = article.getAttribute('data-tags');
+            var dataTag = article.getAttribute('data-tags');
             /* split tags into array */
-            const tagsArray = dataTag.split(' ');
+            var tagsArray = dataTag.split(' ');
             /* loop through tags */
-            for (let tag of tagsArray) {
+            for (var _a = 0, tagsArray_1 = tagsArray; _a < tagsArray_1.length; _a++) {
+                var tag = tagsArray_1[_a];
                 /* generate HTML of the link */
-                const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+                var linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
                 /* add generated code to html variable */
                 html = html + linkHTML;
                 /* check if tag is NOT already in allTags, if not -> push it */
@@ -81,38 +86,41 @@
             tagWrapper.insertAdjacentHTML('afterbegin', html);
         }
         /* find tags list in sidebar */
-        const tagList = document.querySelector(selectorTagsList);
+        var tagList = document.querySelector(selectorTagsList_1);
         /* create variable for all links */
-        let allTagsHTML = '';
+        var allTagsHTML = '';
         /* loop for each tag in unique tags list */
-        for (let tag of allTags) {
+        for (var _b = 0, allTags_1 = allTags; _b < allTags_1.length; _b++) {
+            var tag = allTags_1[_b];
             allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
         }
         /* add html from allTagsHTML to tagList */
         tagList.innerHTML = allTagsHTML;
     };
-    const generateAuthors = () => {
+    var generateAuthors = function () {
         /* create list of unique authors */
-        let allAuthors = [];
+        var allAuthors = [];
         /* find all articles and loop through */
-        const articles = document.querySelectorAll(selectorArticle);
-        for (let article of articles) {
+        var articles = document.querySelectorAll(selectorArticle_1);
+        for (var _i = 0, articles_3 = articles; _i < articles_3.length; _i++) {
+            var article = articles_3[_i];
             /* find wrapper for author in article elem */
-            const articleAuthor = article.querySelector(selectorArticleAuthor);
+            var articleAuthor = article.querySelector(selectorArticleAuthor_1);
             /* get article data-author attribute */
-            const author = article.getAttribute('data-author');
+            var author = article.getAttribute('data-author');
             /* check if author is not already in the list, if not -> push it */
             if (!allAuthors.includes(author)) {
                 allAuthors.push(author);
             }
             /* create author link and add it  to article */
-            const html = 'by <a href="#author-' + author + '">' + author + '</a>';
+            var html = 'by <a href="#author-' + author + '">' + author + '</a>';
             articleAuthor.insertAdjacentHTML('beforeend', html);
         }
         /* find wrapper for author links in sidebar */
-        const authorList = document.querySelector(selectorAuthorsList);
+        var authorList = document.querySelector(selectorAuthorsList_1);
         /* loop through unique authors and generate author links in in sidebar*/
-        for (let author of allAuthors) {
+        for (var _a = 0, allAuthors_1 = allAuthors; _a < allAuthors_1.length; _a++) {
+            var author = allAuthors_1[_a];
             authorList.insertAdjacentHTML('afterbegin', '<li><a href="#">' + author + '</a></li>');
         }
     };
