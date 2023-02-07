@@ -23,6 +23,7 @@
         /* find id of article related to clicked link, then find it and show */
         var hrefAttribute = clickedElement.getAttribute('href');
         var targetArticle = document.querySelector(hrefAttribute);
+        console.log('targetArticle', targetArticle);
         if (targetArticle)
             targetArticle.classList.add('active');
     };
@@ -129,4 +130,5 @@
     generateTags();
     generateAuthors();
 }
+;
 //# sourceMappingURL=script.js.map
